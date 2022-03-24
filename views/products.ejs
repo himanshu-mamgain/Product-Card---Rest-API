@@ -1,0 +1,26 @@
+<%- include("partials/header") -%>
+
+<div class="container p-5">
+    <a href="/logout" class="btn btn-danger ms-3">Log Out</a>
+    <a href="/compose" class="btn btn-success ms-3">Go to compose page</a>
+</div>
+<hr>
+
+<div class="container p-5">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        <% products.forEach(function(product) { %>
+            <tr>
+                <td><%= product.name %></td>
+                <td><%= product.description %></td>
+                <td><%= product.quantity %></td>
+                <td><%= product.price %></td>
+            </tr>
+        <%});%> %>
+    </table>
+</div>

@@ -1,0 +1,35 @@
+<%- include("partials/header") -%>
+
+<div class="container p-5">
+    <div class="row">
+        <h1 class="text-center">Create Product</h1>
+        <hr>
+        <div class="col-sm-8 m-auto p-2">
+          <div class="card">
+            <div class="card-body">
+
+              <form action="/compose" method="POST">
+                <div class="form-group mt-2">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" name="name" placeholder="Enter product name">
+                </div>
+                <div class="form-group mt-2">
+                  <label for="description">Description</label>
+                  <textarea name="description" cols="20" rows="5" class="form-control" placeholder="Enter product description here..."></textarea>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" class="form-control" name="quantity" placeholder="Enter quantity of product">
+                </div>
+                <div class="form-group mt-2">
+                  <label for="price">Price</label>
+                  <input type="number" class="form-control" name="price" placeholder="Enter product price">
+                </div>
+                <button type="submit" class="btn btn-success mt-3">Add</button>
+                <a href="/upload" class="btn btn-danger mt-3 ms-4">Upload .csv file</a>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>

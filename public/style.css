@@ -1,0 +1,17 @@
+button {
+    cursor: pointer;
+}
+
+#footer {
+    position: relative;
+    bottom: 0;
+}
+
+table, tr, td, th {
+    border: 1px solid black;
+    padding: 5px 10px;
+}
+
+td, th {
+    text-align: center;
+}

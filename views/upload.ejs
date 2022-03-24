@@ -1,0 +1,23 @@
+<%- include("partials/header") -%>
+
+<div class="container p-5">
+    <div class="row">
+        <h1 class="text-center">Create Product</h1>
+        <hr>
+        <div class="col-sm-8 m-auto p-2">
+          <div class="card">
+            <div class="card-body">
+
+              <form action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="form-group mt-2">
+                  <label for="file" class="mb-2">Upload a file</label>
+                  <input type="file" class="form-control" name="file">
+                </div>
+                <button type="submit" class="btn btn-dark mt-2">Upload</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
