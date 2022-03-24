@@ -13,6 +13,7 @@
             <th>Description</th>
             <th>Quantity</th>
             <th>Price</th>
+            <th>Creator</th>
         </tr>
         <% products.forEach(function(product) { %>
             <tr>
@@ -20,6 +21,7 @@
                 <td><%= product.description %></td>
                 <td><%= product.quantity %></td>
                 <td><%= product.price %></td>
+                <td><%= product.creator %></td>
             </tr>
         <%});%> %>
     </table>

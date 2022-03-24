@@ -74,7 +74,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/auth/google/products",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
-  function(accessToken, refreshToken, profile, cb) {
+  (accessToken, refreshToken, profile, cb) => {
     console.log(profile);
 
     User.findOrCreate({ googleId: profile.id }, function (err, user) {
@@ -93,8 +93,7 @@ app.get("/auth/google",
 
 app.get("/auth/google/products",
   passport.authenticate('google', { failureRedirect: "/login" }),
-  function(req, res) {
-    // Successful authentication, redirect to secrets.
+  (req, res) => {
     res.redirect("/products");
 });
 
@@ -107,15 +106,19 @@ app.get("/register", (req, res) => {
 });
 
 app.get("/products", (req, res) => {
-    Product.find({"name": {$ne: null}}, (err, products) => {
-        if (err) {
-            console.log(err);
-        } else {
-            if(products) {
-                res.render("products", {products: products});
+    if (req.isAuthenticated()){
+        Product.find({"name": {$ne: null}}, (err, products) => {
+            if (err) {
+                console.log(err);
+            } else {
+                if(products) {
+                    res.render("products", {products: products});
+                }
             }
-        }
-    });
+        });
+    } else {
+        res.redirect("/login");
+    }   
 });
 
 app.get("/compose", (req, res) => {
@@ -127,12 +130,13 @@ app.get("/compose", (req, res) => {
 });
 
 app.post("/compose", (req, res) => {
+
     const product = new Product({
         name: req.body.name,
         description: req.body.description,
         quantity: req.body.quantity,
         price: req.body.price,
-        creator: req.body.creator
+        creator: req.user.name
     });
 
     User.findById(req.user.id, (err, foundUser) => {
@@ -155,23 +159,22 @@ app.get("/logout", (req, res) => {
 });  
 
 app.post("/register", (req, res) => {
-    User.register({
+    User.register(new User ({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         userName: req.body.userName
-    }), req.body.password, (err, user) => {
+    })), req.body.password, (err, user) => {
         if(err) {
             console.log(err);
             res.redirect("/register");
         } else {
             passport.authenticate("local")(req, res, () => {
-                res.redirect("/");
+                console.log(user);
+                res.redirect("/products");
             });
         }
     }
 });
-
-
 
 app.post("/login", (req, res) => {
     const user = new User({
@@ -188,15 +191,6 @@ app.post("/login", (req, res) => {
             });
         }
     });
-});
-
-
-
-
-
-
-app.get("/upload", (req, res) => {
-    res.render("upload");
 });
 
 const Port = process.env.port || 3000;
